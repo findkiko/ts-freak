@@ -1,0 +1,31 @@
+#!/usr/bin/gnuplot
+#        tsf - plot frequency of event timestamps piped to stdin.
+#              one per line.
+#      usage - ./tsf <timestamp_file
+# pipe usage - sed logfile 's/<strip all text after ts>//' | ./tsf
+
+# monthly buckets (roughly). Adjust to suit needs
+bucket_size=60*60*24*30
+
+reset
+clear
+
+# Comment out one of below term opts only.
+# Output to graphics window, 'q' on keyboard will exit.
+#set term x11 persist
+
+# Output to console acsii art.
+set term dumb size 100,45
+
+set xdata time
+set format x "%Y-%m-%d"
+set timefmt "%Y-%m-%d"
+set yrange [0:*]
+
+set style fill solid noborder
+bin(x) = (floor(timecolumn(x)/bucket_size))*bucket_size
+set boxwidth 0.9*bucket_size absolute
+
+plot '<cat' using (bin(1)):(1.0) smooth frequency with boxes \
+                              ti "Timestamp freq"
+# vim:set filetype=gnuplot:

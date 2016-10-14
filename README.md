@@ -8,7 +8,7 @@ Plot frequency of events from a list of timestamps.
 
 ## Usage
 
-~Note: Current expected timestamp format 'YYYY-MM-DD'~
+*Note: Current expected timestamp format 'YYYY-MM-DD'*
 
 `./tsf <ts_file`
 
